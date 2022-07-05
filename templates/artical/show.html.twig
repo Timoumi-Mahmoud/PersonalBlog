@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Artical</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ artical.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ artical.title }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ artical.content }}</td>
+            </tr>
+            <tr>
+                <th>DatePublish</th>
+                <td>{{ artical.datePublish ? artical.datePublish|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+{% endblock %}
