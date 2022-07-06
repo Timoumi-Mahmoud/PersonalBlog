@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Artical;
+use Doctrine\DBAL\Types\DateTimeType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,8 +15,11 @@ class ArticalType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('content')
-            ->add('datePublish')
+            ->add('content', TextareaType::class, array('attr' => array('rows' => '40','cols' => '5')) )
+            ->add('datePublish', DateTimeType::class, array(
+                'data' => new \DateTime(),
+                'attr' => ['hidden' => true]
+            ))
             ->add('category')
         ;
     }

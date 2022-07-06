@@ -26,7 +26,7 @@ class ArticalController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="app_artical_new", methods={"GET", "POST"})
+     * @Route("/new", name="app_artical_new")
      */
     public function new(Request $request, ArticalRepository $articalRepository): Response
     {
