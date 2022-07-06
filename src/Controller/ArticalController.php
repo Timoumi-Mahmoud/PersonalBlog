@@ -25,6 +25,7 @@ class ArticalController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/new", name="app_artical_new")
      */
@@ -85,4 +86,42 @@ class ArticalController extends AbstractController
 
         return $this->redirectToRoute('app_artical_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
+    /*
+
+    public function new(Request $request, EvenementRepository $repository, EntityManagerInterface $em): Response
+    {
+        $evenement = new Evenement();
+        $form = $this->createForm(EvenementType::class, $evenement);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            //$file = $evenement->getImg();
+            $file = $form->get('Img')->getData();
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $em = $this->getDoctrine()->getManager();
+            $evenement->setImg($fileName);
+            $file->move(
+                $this->getParameter('images_directory'),
+                $fileName
+            );
+            $evenement->setImg($fileName);
+            $em->persist($evenement);
+            $em->flush();
+            $repository->add($evenement);
+            $this->addFlash('success', 'Evenement ajouter avec succes!');
+            return $this->redirectToRoute('app_evenement_index');
+        }
+        return $this->render('evenement/new.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+
+
+
+
+    /*
+
 }
