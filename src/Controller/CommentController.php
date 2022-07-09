@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Artical;
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,10 +34,28 @@ class CommentController extends AbstractController
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
+$user=new User();
+
+        $user = $this->getUser();
+        $aritcal =new Artical();
+        $aritcal->setId(1);
+
+     //   dd($user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+          $comment->setUser($user);
+          $comment->setArtical($aritcal);
+
+
+        //$comment->setUser($user);
+           $em = $this->getDoctrine()->getManager();
             $commentRepository->add($comment);
+
+            $em->persist($comment);
+           // dd($comment);
+
+            $em->flush();
             return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
         }
 
