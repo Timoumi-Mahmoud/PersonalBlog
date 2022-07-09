@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{#  {% extends 'base.html.twig' %}
 
 
 {% block body %}
@@ -38,3 +38,33 @@
 
     <a href="{{ path('app_artical_new') }}">Create new</a>
 {% endblock %}
+#}
+
+ {% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+                                {% for i in articals %}
+                                    <a href="{{ path('app_artical_show', {'id': i.id}) }}">
+                                        <span class="dot"> <img src="{{ asset('uploads/images/'~ i.image) }}" style="width:20%"  /></span>
+                                        </a>
+                                            <p>{{ i.category }}</p>
+                                    <p> {{ i.datePublish ? i.datePublish|date('Y-m-d H:i:s') : '' }}</p>
+
+                                {% endfor %}
+
+
+<br>
+    <br>
+
+
+
+
+
+
+{% endblock %}
+
+
+{% block side %}{% endblock %}
+

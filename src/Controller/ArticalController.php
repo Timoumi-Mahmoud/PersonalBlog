@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Artical;
+use App\Entity\Comment;
 use App\Form\ArticalType;
 use App\Repository\ArticalRepository;
+use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,30 +31,46 @@ class ArticalController extends AbstractController
     /**
      * @Route("/new", name="app_artical_new")
      */
-    public function new(Request $request, ArticalRepository $articalRepository): Response
+    public function new(Request $request, ArticalRepository $repository): Response
     {
         $artical = new Artical();
         $form = $this->createForm(ArticalType::class, $artical);
+
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $articalRepository->add($artical);
-            return $this->redirectToRoute('app_artical_index', [], Response::HTTP_SEE_OTHER);
+            //$file = $evenement->getImg();
+            $file = $form->get('image')->getData();
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $em = $this->getDoctrine()->getManager();
+            $artical->setImage($fileName);
+            $file->move(
+                $this->getParameter('images_directory'),
+                $fileName
+            );
+            $artical->setImage($fileName);
+            $em->persist($artical);
+            $em->flush();
+            $repository->add($artical);
+            $this->addFlash('success', 'Articals  ajouter avec succes!');
+            return $this->redirectToRoute('app_home');
         }
-
-        return $this->render('artical/new.html.twig', [
-            'artical' => $artical,
-            'form' => $form->createView(),
-        ]);
+        return $this->render('artical/new.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 
     /**
-     * @Route("/{id}", name="app_artical_show", methods={"GET"})
+     * @Route("/{id}", name="app_artical_show")
      */
-    public function show(Artical $artical): Response
+    public function show($id, ArticalRepository $repositoryArit, Comment $comment, CommentRepository $rep): Response
     {
-        return $this->render('artical/show.html.twig', [
+         $artical =new Artical();
+        $artical = $repositoryArit->find($id);
+        $comment=$rep->findBy(["artical"=>$id]);
+//dd($comment);
+        return $this->render('artical/show.html.twig',[
             'artical' => $artical,
+            'comment'=>$comment,
         ]);
     }
 
@@ -91,14 +109,15 @@ class ArticalController extends AbstractController
 
     /*
 
-    public function new(Request $request, EvenementRepository $repository, EntityManagerInterface $em): Response
+   public function newtwo(Request $request, ArticalRepository $repository ): Response
     {
-        $evenement = new Evenement();
-        $form = $this->createForm(EvenementType::class, $evenement);
+        $artical = new Artical();
+        $form = $this->createForm(ArticalType::class, $artical);
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             //$file = $evenement->getImg();
-            $file = $form->get('Img')->getData();
+            $file = $form->get('image')->getData();
             $fileName = md5(uniqid()) . '.' . $file->guessExtension();
             $em = $this->getDoctrine()->getManager();
             $evenement->setImg($fileName);
@@ -110,18 +129,19 @@ class ArticalController extends AbstractController
             $em->persist($evenement);
             $em->flush();
             $repository->add($evenement);
-            $this->addFlash('success', 'Evenement ajouter avec succes!');
-            return $this->redirectToRoute('app_evenement_index');
+            $this->addFlash('success', 'Articals  ajouter avec succes!');
+            return $this->redirectToRoute('app_home');
         }
-        return $this->render('evenement/new.html.twig', array(
+        return $this->render('artical/new.html.twig', array(
             'form' => $form->createView()
         ));
+     //53 831 853
     }
 
 
 
 
 
-    /*
+   */
 
 }
