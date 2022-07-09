@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Artical;
 use Doctrine\DBAL\Types\DateTimeType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,6 +22,9 @@ class ArticalType extends AbstractType
                 'attr' => ['hidden' => true]
             ))
             ->add('category')
+            ->add('image', FileType::class , ["attr"=> array(),'data_class' => null, 'required' => false,'label'=>"Image de l'evenement :" ])
+
+
         ;
     }
 

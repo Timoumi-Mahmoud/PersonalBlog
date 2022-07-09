@@ -55,12 +55,12 @@ $user=new User();
         //$comment->setUser($user);
            $em = $this->getDoctrine()->getManager();
             $commentRepository->add($comment);
-            $em->merge($comment);
-          //  $em->persist($comment);
-           // dd($comment);
+            //$em->merge($comment);
+            $em->persist($comment);
+            //dd($comment);
 
             $em->flush();
-            return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+           // return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('comment/new.html.twig', [
