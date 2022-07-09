@@ -16,7 +16,7 @@ class ArticalType extends AbstractType
         $builder
             ->add('title')
             ->add('content', TextareaType::class, array('attr' => array('rows' => '40','cols' => '5')) )
-            ->add('datePublish', DateTimeType::class, array(
+            ->add('datePublish', \Symfony\Component\Form\Extension\Core\Type\DateTimeType::class, array(
                 'data' => new \DateTime(),
                 'attr' => ['hidden' => true]
             ))

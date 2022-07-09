@@ -23,7 +23,7 @@ class Comment
     private $content;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $publishAt;
 
@@ -54,12 +54,12 @@ class Comment
         return $this;
     }
 
-    public function getPublishAt(): ?\DateTimeImmutable
+    public function getPublishAt(): ?\DateTime
     {
         return $this->publishAt;
     }
 
-    public function setPublishAt(\DateTimeImmutable $publishAt): self
+    public function setPublishAt(\DateTime $publishAt): self
     {
         $this->publishAt = $publishAt;
 

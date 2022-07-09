@@ -6,6 +6,7 @@ use App\Entity\Artical;
 use App\Entity\Comment;
 use App\Entity\User;
 use App\Form\CommentType;
+use App\Repository\ArticalRepository;
 use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +31,7 @@ class CommentController extends AbstractController
     /**
      * @Route("/new", name="app_comment_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, CommentRepository $commentRepository): Response
+    public function new(Request $request, CommentRepository $commentRepository , ArticalRepository $articalRepository): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -38,9 +39,12 @@ $user=new User();
 
         $user = $this->getUser();
         $aritcal =new Artical();
-        $aritcal->setId(1);
+        $em = $this->getDoctrine()->getManager();
 
-     //   dd($user);
+        $aritcal = $articalRepository->find("1");
+
+
+  //  dd($aritcal);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,8 +55,8 @@ $user=new User();
         //$comment->setUser($user);
            $em = $this->getDoctrine()->getManager();
             $commentRepository->add($comment);
-
-            $em->persist($comment);
+            $em->merge($comment);
+          //  $em->persist($comment);
            // dd($comment);
 
             $em->flush();
