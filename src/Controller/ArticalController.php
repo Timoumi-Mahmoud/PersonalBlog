@@ -60,7 +60,7 @@ class ArticalController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_artical_show")
+     * @Route("/{id}", name="app_artical_show", methods={"GET","POST"})
      */
     public function show($id, ArticalRepository $repositoryArit, Comment $comment, CommentRepository $rep): Response
     {
@@ -70,7 +70,7 @@ class ArticalController extends AbstractController
 //dd($comment);
         return $this->render('artical/show.html.twig',[
             'artical' => $artical,
-            'comment'=>$comment,
+           'comment'=>$comment,
         ]);
     }
 
@@ -92,7 +92,7 @@ class ArticalController extends AbstractController
 
 
     /**
-     * @Route("/{id}/edit", name="app_artical_edit", methods={"GET", "POST"})
+     * @Route("edit/{id}/edit", name="app_artical_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Artical $artical, ArticalRepository $articalRepository): Response
     {

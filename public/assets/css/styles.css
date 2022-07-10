@@ -151,6 +151,13 @@ h5, .h5 {
 h6, .h6 {
   font-size: 1rem;
 }
+.boxComment {
+  background-color: black;
+  width: 700px;
+  border: 15px black;
+  padding: 90px;
+  margin: 39px;
+}
 
 .com{
   margin-right: 20%;
