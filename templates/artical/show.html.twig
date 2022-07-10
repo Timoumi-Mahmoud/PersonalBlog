@@ -41,7 +41,7 @@ ssssss
 
             {% if app.user.id == comment.user.id %}
                 <button class="btn-danger" ><a href="{{ path('app_comment_edit', {'id': comment.id}) }}">Edit</a></button>
-                <button class="btn-danger"> <a href="{{ path('app_comment_delete', {'id': comment.id}) }}">delete</a></button>
+                <button class="btn-danger"> <a href="{{ path('app_comment_remove', {'id': comment.id}) }}">delete</a></button>
             {% endif %}
 
 

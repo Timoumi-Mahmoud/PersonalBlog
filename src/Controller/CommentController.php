@@ -89,7 +89,7 @@ class CommentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commentRepository->add($comment);
-            return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirect($request->request->get('referer'));
         }
 
         return $this->render('comment/edit.html.twig', [
@@ -127,18 +127,6 @@ class CommentController extends AbstractController
         return $this->redirectToRoute('app-home', [], Response::HTTP_SEE_OTHER);
     } */
 
-    /**
-     * @Route("/{id}", name="app_comment_remove", methods={"POST"})
-     */
-    public function remove(Request $request, $id, CommentRepository $commentRepository): Response
-    {
-        $comment = new Comment();
-        $em = $this->getDoctrine()->getManager();
-        $comment = $commentRepository->find($id);
-        $em->remove($comment);
-        $em->flush();
-        return $this->redirectToRoute('app_home');
-    }
 
 
 

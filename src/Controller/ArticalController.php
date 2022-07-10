@@ -75,6 +75,23 @@ class ArticalController extends AbstractController
     }
 
     /**
+     * @Route("/comment/{id}", name="app_comment_remove")
+     */
+    public function remove(Request $request, $id, CommentRepository $commentRepository): Response
+    {
+        $comment = new Comment();
+        $em = $this->getDoctrine()->getManager();
+        $comment = $commentRepository->find($id);
+        $em->remove($comment);
+        $em->flush();
+        return $this->redirectToRoute('app_home');
+    }
+
+
+
+
+
+    /**
      * @Route("/{id}/edit", name="app_artical_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Artical $artical, ArticalRepository $articalRepository): Response
