@@ -31,36 +31,36 @@ class CommentController extends AbstractController
     /**
      * @Route("/new", name="app_comment_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, CommentRepository $commentRepository , ArticalRepository $articalRepository): Response
+    public function new(Request $request, CommentRepository $commentRepository, ArticalRepository $articalRepository): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
-$user=new User();
+        $user = new User();
 
         $user = $this->getUser();
-        $aritcal =new Artical();
+        $aritcal = new Artical();
         $em = $this->getDoctrine()->getManager();
 
         $aritcal = $articalRepository->find("1");
 
 
-  //  dd($aritcal);
+        //  dd($aritcal);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-          $comment->setUser($user);
-          $comment->setArtical($aritcal);
+            $comment->setUser($user);
+            $comment->setArtical($aritcal);
 
 
-        //$comment->setUser($user);
-           $em = $this->getDoctrine()->getManager();
+            //$comment->setUser($user);
+            $em = $this->getDoctrine()->getManager();
             $commentRepository->add($comment);
             //$em->merge($comment);
             $em->persist($comment);
             //dd($comment);
 
             $em->flush();
-           // return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+            // return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('comment/new.html.twig', [
@@ -101,12 +101,45 @@ $user=new User();
     /**
      * @Route("/{id}", name="app_comment_delete", methods={"POST"})
      */
-    public function delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
+    public function delete(Request $request, $id, CommentRepository $commentRepository): Response
+    {
+        $comment = new Comment();
+        $em = $this->getDoctrine()->getManager();
+        $comment = $commentRepository->find($id);
+        $em->remove($comment);
+        $em->flush();
+        return $this->redirectToRoute('app_home');
+    }
+
+
+
+
+ /*
+
+  *
+  *
+  *    public function delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment);
         }
 
-        return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app-home', [], Response::HTTP_SEE_OTHER);
+    } */
+
+    /**
+     * @Route("/{id}", name="app_comment_remove", methods={"POST"})
+     */
+    public function remove(Request $request, $id, CommentRepository $commentRepository): Response
+    {
+        $comment = new Comment();
+        $em = $this->getDoctrine()->getManager();
+        $comment = $commentRepository->find($id);
+        $em->remove($comment);
+        $em->flush();
+        return $this->redirectToRoute('app_home');
     }
+
+
+
 }
