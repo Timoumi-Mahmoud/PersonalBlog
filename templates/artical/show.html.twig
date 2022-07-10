@@ -99,7 +99,7 @@ user is
 
     <br>
     {{ render(controller(
-        'App\\Controller\\CommentController::new'
+        'App\\Controller\\CommentController::new',  {'request': app.request}
     )) }}
 
 {% endblock %}
