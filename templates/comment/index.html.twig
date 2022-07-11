@@ -4,7 +4,25 @@
 
 {% block body %}
     <h1>Comment index</h1>
+    <br>  <br> <br>
+    <div class="com">
 
+        {% for comment in comments %}
+            <div class="boxComment">
+                {{ comment.content }}  <br>
+                {{ comment.publishAt ? comment.publishAt|date('Y-m-d H:i:s') : '' }}
+            </div>
+            <div class="com">
+                {% if app.user.id == comment.user.id %}
+                    <button class="btn-danger" ><a href="{{ path('app_comment_edit', {'id': comment.id}) }}">Edit</a></button>
+                    <button class="btn-danger"> <a href="{{ path('app_comment_remove', {'id': comment.id}) }}">delete</a></button>
+
+                {% endif %}
+            </div>
+
+            --------------------------------------
+            <br>  <br> <br>
+        {% endfor %}</div>
     <table class="table">
         <thead>
             <tr>

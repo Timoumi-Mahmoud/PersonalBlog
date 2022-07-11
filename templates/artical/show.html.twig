@@ -23,16 +23,7 @@ ssssss
 <br>  <br> <br>
     <div class="com">
 
-
-
-
-
-
-
 {% for comment in comment %}
-
-
-
         <div class="boxComment">
         {{ comment.content }}  <br>
       {{ comment.publishAt ? comment.publishAt|date('Y-m-d H:i:s') : '' }}
@@ -43,23 +34,11 @@ ssssss
                 <button class="btn-danger"> <a href="{{ path('app_comment_remove', {'id': comment.id}) }}">delete</a></button>
 
             {% endif %}
-                </div>
-
-
+    </div>
 
 --------------------------------------
     <br>  <br> <br>
-
-
-
-
-
-
-
-
-
-
-{% endfor %}
+{% endfor %}</div>
         <br>
 
         {{ render(controller(
@@ -67,7 +46,9 @@ ssssss
         )) }}
 
 
-
+        {{ render(controller(
+            'App\\Controller\\CommentController::index'
+        )) }}
         --------------------------------------
         <br>  <br> <br>--------------------------------------
         <br>  <br> <br>--------------------------------------
