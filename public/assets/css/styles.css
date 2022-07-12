@@ -153,10 +153,10 @@ h6, .h6 {
 }
 .boxComment {
   background-color: black;
-  width: 700px;
-  border: 15px black;
-  padding: 90px;
-  margin: 39px;
+ /* border: 15px black;
+  padding: 90px;*/
+  margin-right: 20%;
+  margin-left: 20%;
 }
 
 .com{
