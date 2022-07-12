@@ -18,20 +18,26 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CommentController extends AbstractController
 {
+
+
+
     /**
-     * @Route("/", name="app_comment_index", methods={"GET"})
+     * @Route("/artical/{id}", name="app_comment_index", methods={"GET"})
      */
-    public function index(CommentRepository $commentRepository): Response
+    public function index(CommentRepository $commentRepository, $id): Response
     {
+
         return $this->render('comment/index.html.twig', [
-            'comments' => $commentRepository->findAll(),
+            'comments' => $commentRepository->findBy(["artical"=>$id]),
         ]);
     }
+
+
 
     /**
      * @Route("/new", name="app_comment_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, CommentRepository $commentRepository, ArticalRepository $articalRepository): Response
+    public function new(Request $request, CommentRepository $commentRepository, ArticalRepository $articalRepository, $id): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -41,7 +47,7 @@ class CommentController extends AbstractController
         $aritcal = new Artical();
         $em = $this->getDoctrine()->getManager();
 
-        $aritcal = $articalRepository->find("1");
+        $aritcal = $articalRepository->find("$id");
 
 
         //  dd($aritcal);
@@ -89,7 +95,7 @@ class CommentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commentRepository->add($comment);
-            return $this->redirect($request->request->get('referer'));
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('comment/edit.html.twig', [

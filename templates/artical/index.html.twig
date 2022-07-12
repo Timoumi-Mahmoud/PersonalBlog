@@ -44,31 +44,31 @@
 
 {% block body %}
 
-    {% for i in articals %}
-     <div class="com">
-    <div class="col-md-7">
-        <a href="{{ path('app_artical_show', {'id': i.id}) }}">
-            <img src="{{ asset('uploads/images/'~ i.image) }}" class="img-fluid" style="width: 30%; height: 30%;"></a>
-      </div>
-    <div class="col-md-5">
-         <p>{{ i.category }}</p>
-        <p> {{ i.datePublish ? i.datePublish|date('Y-m-d H:i:s') : '' }}</p></div>
-</div>
+<h2>All Articals in this blog are:: </h2>
 
+    <form method="post" action="{{ path('recherche') }}">
 
-{% endfor %}
+        <input type="text" name="search"><input type="submit" value="Recherche">
+    </form>
     <div class="com">
     <div class="container">
+
+        <p> {{ dump() }}</p>
         {% for i in articals %}
+            <p> {{ dump(i.category.nameCategory) }}</p>
         <div class="row">
             <div class="col-sm-8">
                 <a href="{{ path('app_artical_show', {'id': i.id}) }}">
-                    <img src="{{ asset('uploads/images/'~ i.image) }}" style="height:50%" width="50%"></a>
+                    <img src="{{ asset('uploads/images/'~ i.image) }}" style="width: 50%"></a>
                 ------------------------------------------------------------------------------
             </div>
             <div class="col-sm-1">
-                <p>{{ i.category }}</p>
-                <p> {{ i.datePublish ? i.datePublish|date('Y-m-d H:i:s') : '' }}</p></div>            </div>
+                <ul><li><p>{{ i.category }}</p>  </li>
+                <li><p>{{ i.datePublish ? i.datePublish|date('Y-m-d H:i:s') : '' }}</p></li>
+
+                </ul>
+
+                </div>            </div>
         {% endfor %}
         </div>
 

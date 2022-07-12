@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Artical;
+use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -46,6 +47,32 @@ class ArticalRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+
+
+    public function findEventByValue($value){
+
+
+        $query=$this->createQueryBuilder('a')
+            ->select('c', 'a')
+            ->join('a.category','c')
+            ->andWhere('a.title LIKE :sujet  or c.nameCategory LIKE :sujet ')
+            //->andWhere('e.Title LIKE :sujet or e.Category Like :sujet  or c.Nom Like :sujet')
+
+            ->setParameter('sujet', '%'.$value.'%');
+        return $query->getQuery()->getResult();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     // /**
     //  * @return Artical[] Returns an array of Artical objects

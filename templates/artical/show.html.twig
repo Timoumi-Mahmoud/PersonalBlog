@@ -1,62 +1,30 @@
-
-
-
-
 {% extends 'base.html.twig' %}
 {% block header %}
     ddd
 {% endblock %}
 {% block body %}
-
     <h1 xmlns="http://www.w3.org/1999/html">Artical</h1>
-
     <i class="fas fa-heading">another title</i>
 <h2><td>{{ artical.id }}</td></h2>
-
                 <p>{{ artical.content }}
     <div class="float-end">
         <i class="fa fa-calendar" aria-hidden="true">
             <td>{{ artical.datePublish ? artical.datePublish|date('Y-m-d H:i:s') : '' }}</td>
         </i></div>
-ssssss
 
-<br>  <br> <br>
-    <div class="com">
+    <input type="hidden" name="referer"
+           value="{{app.request.headers.get('referer')}}"/>
+    {% set ar=  artical.id  %}
 
-{% for comment in comment %}
-        <div class="boxComment">
-        {{ comment.content }}  <br>
-      {{ comment.publishAt ? comment.publishAt|date('Y-m-d H:i:s') : '' }}
-        </div>
-    <div class="com">
-            {% if app.user.id == comment.user.id %}
-                <button class="btn-danger" ><a href="{{ path('app_comment_edit', {'id': comment.id}) }}">Edit</a></button>
-                <button class="btn-danger"> <a href="{{ path('app_comment_remove', {'id': comment.id}) }}">delete</a></button>
-
-            {% endif %}
-    </div>
-
---------------------------------------
-    <br>  <br> <br>
-{% endfor %}</div>
-        <br>
-
-        {{ render(controller(
-            'App\\Controller\\CommentController::new',  {'request': app.request}
+    {{ render(controller(
+            'App\\Controller\\CommentController::new',  {'request': app.request, 'id':ar}
         )) }}
 
-
+    <input type="hidden" name="referer"
+           value="{{app.request.headers.get('referer')}}"/>
         {{ render(controller(
-            'App\\Controller\\CommentController::index'
+            'App\\Controller\\CommentController::index',{'id':ar }
         )) }}
         --------------------------------------
-        <br>  <br> <br>--------------------------------------
-        <br>  <br> <br>--------------------------------------
-        <br>  <br> <br>--------------------------------------
-        <br>  <br> <br>--------------------------------------
-        <br>  <br> <br>--------------------------------------
-        <br>  <br> <br>
-
-
 
 {% endblock %}

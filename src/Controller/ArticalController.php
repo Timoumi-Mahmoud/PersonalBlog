@@ -28,6 +28,28 @@ class ArticalController extends AbstractController
     }
 
 
+
+    /**
+     * @Route("/search", name="recherche")
+     */
+
+    function Recherche( ArticalRepository $articalRepository, Request $request)
+    {
+$ar =new Artical();
+        $value = $request->get('search');
+        $ar= $articalRepository->findEventByValue($value);
+        return $this->render("artical/index.html.twig",
+            ['articals' => $ar]);
+    }
+
+
+
+
+
+
+
+
+
     /**
      * @Route("/new", name="app_artical_new")
      */
@@ -62,15 +84,12 @@ class ArticalController extends AbstractController
     /**
      * @Route("/{id}", name="app_artical_show", methods={"GET","POST"})
      */
-    public function show($id, ArticalRepository $repositoryArit, Comment $comment, CommentRepository $rep): Response
+    public function show($id, ArticalRepository $repositoryArit): Response
     {
          $artical =new Artical();
         $artical = $repositoryArit->find($id);
-        $comment=$rep->findBy(["artical"=>$id]);
-//dd($comment);
         return $this->render('artical/show.html.twig',[
             'artical' => $artical,
-           'comment'=>$comment,
         ]);
     }
 
@@ -124,6 +143,10 @@ class ArticalController extends AbstractController
 
 
 
+
+
+
+
     /*
 
    public function newtwo(Request $request, ArticalRepository $repository ): Response
@@ -156,9 +179,10 @@ class ArticalController extends AbstractController
     }
 
 
+------------------------------------------------------------------------
 
 
 
-   */
+*/
 
 }
