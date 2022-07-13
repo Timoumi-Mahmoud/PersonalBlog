@@ -8,12 +8,18 @@
     <div class="com">
 
         {% for comment in comments %}
-
+                {{ dump(comment) }}
                 {{ comment.content }}  <br>
                 {{ comment.publishAt ? comment.publishAt|date('Y-m-d H:i:s') : '' }}
 
+
+
             <div class="com">
-                {% if app.user.id == comment.user.id %}
+                {% if app.user== null %}
+                <p></p>
+                {% elseif  app.user.id == comment.user.id  %}
+                {{ app.user.firstName }}  {{ app.user.firstName }}  {{ app.user.email }}
+
                     <button class="btn-danger" ><a href="{{ path('app_comment_edit', {'id': comment.id}) }}">Edit</a></button>
                     <button class="btn-danger"> <a href="{{ path('app_comment_remove', {'id': comment.id}) }}">delete</a></button>
 
