@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ContactRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ContactRepository::class)
@@ -19,21 +20,42 @@ class Contact
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *    message="You should give us your name please"
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  @Assert\NotBlank(
+     *    message="You must enter your mail "
+     * )
+     *  * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * * * @Assert\NotBlank(
+     *    message="You can't send an email without it's subject !!"
+     * )
+     * * @Assert\Length(
+     *      min = 15,
+     *      max = 80,
+     *      minMessage = "Your subject  must be at least {{ limit }} characters long",
+     *      maxMessage = "Your subject  must be cannot be longer than {{ limit }} characters"
+     * )
      */
     private $subject;
 
     /**
      * @ORM\Column(type="text")
+     * * @Assert\NotBlank(
+     *    message="You can't send an empty message !!"
+     * )
      */
     private $message;
 
