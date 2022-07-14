@@ -13,17 +13,17 @@
 
 
             <div class="com">
-                {% if app.user== null %}
-                    {{ dump(comment) }}
+                {% if app.user== null  or app.user.id != comment.user.id %}
+                    <p>kddddddddddddddddddddddddddddddddddddddddddddddf {{ comment.user.email }}</p>
                     {{ comment.content }}  <br>
                     {{ comment.publishAt ? comment.publishAt|date('Y-m-d H:i:s') : '' }}
                 <p></p>
                 {% elseif  app.user.id == comment.user.id  %}
                 {{ app.user.firstName }}  {{ app.user.firstName }}  {{ app.user.email }}
+                    {{ dump(comment) }}
 
                     <button class="btn-danger" ><a href="{{ path('app_comment_edit', {'id': comment.id}) }}">Edit</a></button>
                     <button class="btn-danger"> <a href="{{ path('app_comment_remove', {'id': comment.id}) }}">delete</a></button>
-
                 {% endif %}
             </div>
 
@@ -40,14 +40,33 @@
         <div class="d-flex justify-content-center row">
             <div class="col-md-8">
                 <div class="d-flex flex-column comment-section">
+                    {% for comment in comments %}
+                    {% if app.user== null  or app.user.id != comment.user.id %}
+
                     <div class="bg-white p-2">
-                        <div class="d-flex flex-row user-info"><img class="rounded-circle" src="{{ asset('UserAvatar.png') }}" width="40">
-                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">Marry Andrews</span><span class="date text-black-50">Shared publicly - Jan 2020</span></div>
+                        <div class="d-flex flex-row user-info"><img class="rounded-circle" src="{{ asset('UserAvatar.png') }}" width="50">
+
+                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name"><p>{{ comment.user.email }}</p></span><span class="date text-black-50">Shared publicly -{{ comment.publishAt  |date('Y-m-d H:i:s') }}</span></div>
                         </div>
                         <div class="mt-2">
-                            <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <p class="comment-text">{{ comment.content }}</p>
                         </div>
+
+                        {% elseif  app.user.id == comment.user.id  %}
+                        <div class="bg-white p-2">
+                            <div class="d-flex flex-row user-info"><img class="rounded-circle" src="{{ asset('UserAvatar.png') }}" width="50">
+
+                                <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name"><p>{{ comment.user.email }}</p></span><span class="date text-black-50">Shared publicly -{{ comment.publishAt  |date('Y-m-d H:i:s') }}</span></div>
+                            </div>
+                            <div class="mt-2">
+                                <p class="comment-text">{{ comment.content }}</p>
+                            </div>                            <button class="btn-danger" ><a href="{{ path('app_comment_edit', {'id': comment.id}) }}">Edit</a></button>
+                            <button class="btn-danger"> <a href="{{ path('app_comment_remove', {'id': comment.id}) }}">delete</a></button>
+                        {% endif %}
+                        <br>
+                        {% endfor %}
                     </div>
+                        {#
                     <div class="bg-white">
                         <div class="d-flex flex-row fs-12">
                             <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span></div>
@@ -64,7 +83,7 @@
         </div>
     </div>
 
-
+                        #}
 
 
 

@@ -45,21 +45,21 @@
 {% block body %}
 
 <h2>All Articals in this blog are:: </h2>
-
+<div style="position: center">
     <form method="post" action="{{ path('recherche') }}">
-
         <input type="text" name="search"><input type="submit" value="Recherche">
     </form>
+</div>
     <div class="com">
     <div class="container">
 
-        <p> {{ dump() }}</p>
+
         {% for i in articals %}
-            <p> {{ dump(i.category.nameCategory) }}</p>
+            <p> {{  i.category.nameCategory }}</p>
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-4">
                 <a href="{{ path('app_artical_show', {'id': i.id}) }}">
-                    <img src="{{ asset('uploads/images/'~ i.image) }}" style="width: 50%"></a>
+                    <img src="{{ asset('uploads/images/'~ i.image) }}" style="width: 40%"></a>
                 ------------------------------------------------------------------------------
             </div>
             <div class="col-sm-1">
@@ -68,8 +68,13 @@
 
                 </ul>
 
-                </div>            </div>
+                </div>
+
+
+        </div>
         {% endfor %}
+        </div>
+        <div class="col-sm-7">
         </div>
 
     </div>
@@ -79,6 +84,20 @@
 
 
 
+
+    <div class="container" style="color:black">
+        <div class="row">
+            <div class="col-sm-7">
+                One of three columns
+            </div>
+            <div class="col-sm-5">
+                One of three columns
+            </div>
+            <div class="col-sm">
+                One of three columns
+            </div>
+        </div>
+    </div>
 
 
 

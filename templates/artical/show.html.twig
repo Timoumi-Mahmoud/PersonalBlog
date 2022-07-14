@@ -24,7 +24,8 @@
             'App\\Controller\\CommentController::index',{'id':ar }
         )) }}
         --------------------------------------
-    {{app.request.headers.get('referer')}}
 
-
+    {{ render(controller(
+        'App\\Controller\\CommentController::new',  {'request': app.request, 'id':ar}
+    )) }}
 {% endblock %}

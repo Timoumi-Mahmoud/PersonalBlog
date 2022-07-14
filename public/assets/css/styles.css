@@ -173,6 +173,7 @@ h6, .h6 {
 }
 p {
   margin-top: 0;
+  font-family: monospace;
   margin-bottom: 1rem;
   color: #1a1e21;
   margin-left: 10%;
