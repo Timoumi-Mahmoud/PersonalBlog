@@ -1,14 +1,28 @@
-version: '3'
-
+version: "3.5"
 services:
-###> symfony/mailer ###
-  mailer:
-    image: schickling/mailcatcher
-    ports: [1025, 1080]
-###< symfony/mailer ###
-
-###> doctrine/doctrine-bundle ###
   database:
+    build:
+      context: docker/mysql
+    volumes:
+      - "dbdata:/var/lib/mysql"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+
+  application:
+    depends_on:
+      - database
+    build:
+      context: docker/lamps
     ports:
-      - "5432"
-###< doctrine/doctrine-bundle ###
+      - "8000:8000"
+    volumes:
+      - ".:/app:cached"
+      - "var:/symfony/var"
+      - "vendor:/symfony/vendor"
+    environment:
+      DATABASE_URL: mysql://dbuser:dbuser@database/dbname
+
+volumes:
+  dbdata:
+  var:
+  vendor:
