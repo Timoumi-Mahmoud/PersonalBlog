@@ -3,34 +3,59 @@
 {% block title %}Register{% endblock %}
 
 
-{% block side %}
+{% block head%}
 {% endblock %}
 {% block body %}
     <h1>Register</h1>
+
+<div class="bg-image"
+     style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/76.jpg');
+            height: 100vh">
+
 <div class="com2">
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
 
-        {{ form_row(registrationForm.plainPassword, {
+        {{ form_row(registrationForm.password, {
             label: 'Password'
         }) }}
+
+
+
+
      {#    {{ form_row(registrationForm.agreeTerms) }}  #}
 
 
 
+<div class="row">
+    <div class="col-sm">
+        {{ form_row(registrationForm.firstName) }}
+
+    </div>
+    <div class="col-sm">
+        {{ form_row(registrationForm.lastName) }}
+    </div>
+
+</div>
+
+    <div class="row">
+        <div class="col-sm">
+            {{ form_row(registrationForm.country) }}
+
+        </div>
+        <div class="col-sm">
+            {{ form_row(registrationForm.state) }}
+        </div>
+
+    </div>
 
 
-
-    <td> <div style="width: 50%"> <tr> {{ form_row(registrationForm.firstName) }}</tr></div>
-        <div style="width: 50%"><tr> {{ form_row(registrationForm.lastName) }}</tr> </div>  </td>
-
-    {{ form_row(registrationForm.country) }}
-    {{ form_row(registrationForm.state) }}
 
     {{ form_end(registrationForm) }}
 
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"/>
 
-
+</div>
+</div>
 {% endblock %}
