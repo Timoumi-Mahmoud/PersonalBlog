@@ -44,65 +44,43 @@
 
 {% block body %}
 
-<h2>All Articals in this blog are:: </h2>
+<h2>All Articals in this blog are:::: </h2>
 <div style="position: center">
     <form method="post" action="{{ path('recherche') }}">
         <input type="text" name="search"><input type="submit" value="Recherche">
     </form>
 </div>
-    <div class="com">
-    <div class="container">
 
 
-        {% for i in articals %}
-            <p> {{  i.category.nameCategory }}</p>
-        <div class="row">
-            <div class="col-sm-4">
-                <a href="{{ path('app_artical_show', {'id': i.id}) }}">
-                    <img src="{{ asset('uploads/images/'~ i.image) }}" style="width: 40%"></a>
-                ------------------------------------------------------------------------------
-            </div>
-            <div class="col-sm-1">
-                <ul><li><p>{{ i.category }}</p>  </li>
-                <li><p>{{ i.datePublish ? i.datePublish|date('Y-m-d H:i:s') : '' }}</p></li>
 
-                </ul>
-
-                </div>
-
-
-        </div>
-        {% endfor %}
-        </div>
-        <div class="col-sm-7">
-        </div>
-
-    </div>
-</div>
 <br>
     <br>
-
-
-
+{% for i in articals %}
 
     <div class="container" style="color:black">
         <div class="row">
+            <div class="col-sm-3">
+                <a href="{{ path('app_artical_show', {'id': i.id}) }}">
+                    <img src="{{ asset('uploads/images/'~ i.image) }}" style="width: 40%"></a>
+            </div>
             <div class="col-sm-7">
-                One of three columns
+                <div style="color: darkred"><b> {{ i.title }}</b></div>
+                <br>
+                <div > {{ i.content|truncate(500)}}........</div>
             </div>
-            <div class="col-sm-5">
-                One of three columns
-            </div>
-            <div class="col-sm">
-                One of three columns
-            </div>
+            <div class="col-sm-2">
+                <div style="background-color: blue">
+            {{ i.category }}
+
+                </div>
+                <p> publish at: {{ i.datePublish ? i.datePublish|date('Y-m-d H:i:s') : '' }}</p>
         </div>
+        {% endfor %}
+</div>
     </div>
-
-
 
 {% endblock %}
 
-
+{% block footer %}{% endblock %}
 
 

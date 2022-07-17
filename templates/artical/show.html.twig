@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block header %}
-    ddd
+{% block head %}
 {% endblock %}
 {% block body %}
     <h1 xmlns="http://www.w3.org/1999/html">Artical</h1>
@@ -24,8 +23,7 @@
             'App\\Controller\\CommentController::index',{'id':ar }
         )) }}
         --------------------------------------
+</div>
 
-    {{ render(controller(
-        'App\\Controller\\CommentController::new',  {'request': app.request, 'id':ar}
-    )) }}
 {% endblock %}
+{% block footer %} {% endblock %}
